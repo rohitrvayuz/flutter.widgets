@@ -43,7 +43,7 @@ class PositionedList extends StatefulWidget {
     this.semanticChildCount,
     this.addSemanticIndexes = true,
     this.addRepaintBoundaries = true,
-    this.addAutomaticKeepAlives = true,
+    this.addAutomaticKeepAlives = true, required this.primary,
   })  : assert(itemCount != null),
         assert(itemBuilder != null),
         assert((positionedIndex == 0) || (positionedIndex < itemCount)),
@@ -132,6 +132,8 @@ class PositionedList extends StatefulWidget {
   /// See [SliverChildBuilderDelegate.addAutomaticKeepAlives].
   final bool addAutomaticKeepAlives;
 
+  final bool primary;
+
   @override
   State<StatefulWidget> createState() => _PositionedListState();
 }
@@ -170,6 +172,7 @@ class _PositionedListState extends State<PositionedList> {
         child: UnboundedCustomScrollView(
           anchor: widget.alignment,
           center: _centerKey,
+          primary: widget.primary,
           controller: scrollController,
           scrollDirection: widget.scrollDirection,
           reverse: widget.reverse,

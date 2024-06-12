@@ -54,9 +54,10 @@ class ScrollablePositionedList extends StatefulWidget {
     this.semanticChildCount,
     this.padding,
     this.addSemanticIndexes = true,
+
     this.addAutomaticKeepAlives = true,
     this.addRepaintBoundaries = true,
-    this.minCacheExtent,
+    this.minCacheExtent,  this.primary = false,
   })  : assert(itemCount != null),
         assert(itemBuilder != null),
         itemPositionsNotifier = itemPositionsListener as ItemPositionsNotifier?,
@@ -84,6 +85,7 @@ class ScrollablePositionedList extends StatefulWidget {
     this.semanticChildCount,
     this.padding,
     this.addSemanticIndexes = true,
+    this.primary = false,
     this.addAutomaticKeepAlives = true,
     this.addRepaintBoundaries = true,
     this.minCacheExtent,
@@ -115,6 +117,8 @@ class ScrollablePositionedList extends StatefulWidget {
 
   /// Notifier that reports the changes to the scroll offset.
   final ScrollOffsetNotifier? scrollOffsetNotifier;
+
+
 
   /// Index of an item to initially align within the viewport.
   final int initialScrollIndex;
@@ -185,6 +189,8 @@ class ScrollablePositionedList extends StatefulWidget {
   /// in builds of widgets that would otherwise already be built in the
   /// cache extent.
   final double? minCacheExtent;
+
+  final bool primary;
 
   @override
   State<StatefulWidget> createState() => _ScrollablePositionedListState();
@@ -420,6 +426,7 @@ class _ScrollablePositionedListState extends State<ScrollablePositionedList>
                   child: NotificationListener<ScrollNotification>(
                     onNotification: (_) => _isTransitioning,
                     child: PositionedList(
+                      primary: widget.primary ,
                       itemBuilder: widget.itemBuilder,
                       separatorBuilder: widget.separatorBuilder,
                       itemCount: widget.itemCount,
@@ -450,6 +457,7 @@ class _ScrollablePositionedListState extends State<ScrollablePositionedList>
                     child: NotificationListener<ScrollNotification>(
                       onNotification: (_) => false,
                       child: PositionedList(
+                        primary: widget.primary,
                         itemBuilder: widget.itemBuilder,
                         separatorBuilder: widget.separatorBuilder,
                         itemCount: widget.itemCount,
